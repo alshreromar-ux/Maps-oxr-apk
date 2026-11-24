@@ -1,0 +1,6 @@
+{
+  "name": "نبض المدينة",
+  "description": "تطبيق خرائط تفاعلي لعرض الأماكن والخدمات المحلية القريبة والتحديثات الحية من المستخدمين باستخدام OpenStreetMap وFirebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,188 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidCategory(category) {
+      return category in ['PHARMACY', 'RESTAURANT', 'MAINTENANCE', 'CAFE', 'DEAL', 'ROAD_REPORT'];
+    }
+
+    function isValidStatus(status) {
+      return status in ['OPEN', 'CROWDED', 'DEAL_ACTIVE', 'CLOSED', 'TRAFFIC_ALERT'];
+    }
+
+    function isValidCityPin(data) {
+      return data.visibility == 'public' &&
+             data.title is string && data.title.size() >= 2 && data.title.size() <= 80 &&
+             data.description is string && data.description.size() <= 300 &&
+             data.category is string && isValidCategory(data.category) &&
+             data.status is string && isValidStatus(data.status) &&
+             data.latitude is number && data.latitude >= -90 && data.latitude <= 90 &&
+             data.longitude is number && data.longitude >= -180 && data.longitude <= 180 &&
+             data.cityName is string && data.cityName.size() >= 1 && data.cityName.size() <= 60 &&
+             (!('photoBase64' in data) || (data.photoBase64 is string && data.photoBase64.size() <= 120000)) &&
+             data.confirmationsCount is int && data.confirmationsCount >= 1 && data.confirmationsCount <= 1000000 &&
+             data.createdBy is string && data.createdBy.size() >= 1 && data.createdBy.size() <= 128 &&
+             data.createdByName is string && data.createdByName.size() >= 1 && data.createdByName.size() <= 60 &&
+             data.updatedBy is string && data.updatedBy.size() >= 1 && data.updatedBy.size() <= 128 &&
+             data.updatedByName is string && data.updatedByName.size() >= 1 && data.updatedByName.size() <= 60 &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    function isValidStatusUpdate(data, pinId) {
+      return data.pinId == pinId &&
+             data.visibility == 'public' &&
+             data.status is string && isValidStatus(data.status) &&
+             data.note is string && data.note.size() <= 160 &&
+             data.authorId is string && data.authorId.size() >= 1 && data.authorId.size() <= 128 &&
+             data.authorName is string && data.authorName.size() >= 1 && data.authorName.size() <= 60 &&
+             data.createdAt is timestamp && data.createdAt <= request.time;
+    }
+
+    match /city_pins/{pinId} {
+      allow get: if isSignedIn() && isValidId(pinId) && existing().visibility == 'public';
+      allow list: if isSignedIn() && existing().visibility == 'public';
+
+      allow create: if isSignedIn() &&
+                       isValidId(pinId) &&
+                       incoming().keys().hasAll([
+                         'visibility', 'title', 'description', 'category', 'status',
+                         'latitude', 'longitude', 'cityName', 'confirmationsCount',
+                         'createdBy', 'createdByName', 'updatedBy', 'updatedByName',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'visibility', 'title', 'description', 'category', 'status',
+                         'latitude', 'longitude', 'cityName', 'photoBase64', 'confirmationsCount',
+                         'createdBy', 'createdByName', 'updatedBy', 'updatedByName',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().createdBy == request.auth.uid &&
+                       incoming().updatedBy == request.auth.uid &&
+                       incoming().confirmationsCount == 1 &&
+                       isValidCityPin(incoming());
+
+      allow update: if isSignedIn() &&
+                       isValidId(pinId) &&
+                       isValidCityPin(incoming()) &&
+                       incoming().visibility == existing().visibility &&
+                       incoming().createdBy == existing().createdBy &&
+                       incoming().createdByName == existing().createdByName &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedBy == request.auth.uid &&
+                       (
+                         // Action 1: Any signed-in community member can confirm or update status
+                         (
+                           incoming().diff(existing()).affectedKeys().hasOnly([
+                             'status', 'updatedBy', 'updatedByName', 'updatedAt', 'confirmationsCount'
+                           ]) &&
+                           (
+                             incoming().confirmationsCount == existing().confirmationsCount ||
+                             incoming().confirmationsCount == existing().confirmationsCount + 1
+                           )
+                         ) ||
+                         // Action 2: Pin creator can edit pin details
+                         (
+                           existing().createdBy == request.auth.uid &&
+                           incoming().diff(existing()).affectedKeys().hasOnly([
+                             'title', 'description', 'category', 'status', 'cityName',
+                             'photoBase64', 'updatedBy', 'updatedByName', 'updatedAt'
+                           ]) &&
+                           incoming().confirmationsCount == existing().confirmationsCount
+                         )
+                       );
+
+      allow delete: if isSignedIn() && isValidId(pinId) && existing().createdBy == request.auth.uid;
+
+      match /status_updates/{updateId} {
+        allow get: if isSignedIn() && isValidId(pinId) && isValidId(updateId) && existing().visibility == 'public';
+        allow list: if isSignedIn() && isValidId(pinId) && existing().visibility == 'public';
+
+        allow create: if isSignedIn() &&
+                         isValidId(pinId) &&
+                         isValidId(updateId) &&
+                         isValidStatusUpdate(incoming(), pinId) &&
+                         incoming().keys().hasAll([
+                           'pinId', 'visibility', 'status', 'note',
+                           'authorId', 'authorName', 'createdAt'
+                         ]) &&
+                         incoming().keys().hasOnly([
+                           'pinId', 'visibility', 'status', 'note',
+                           'authorId', 'authorName', 'createdAt'
+                         ]) &&
+                         incoming().authorId == request.auth.uid &&
+                         exists(/databases/$(database)/documents/city_pins/$(pinId));
+
+        allow update: if false;
+
+        allow delete: if isSignedIn() && isValidId(pinId) && isValidId(updateId) && existing().authorId == request.auth.uid;
+      }
+    }
+
+    function isValidPlaceType(placeType) {
+      return placeType in ['HOME', 'WORK', 'FAVORITE'];
+    }
+
+    function isValidSavedPlace(data) {
+      return data.placeType is string && isValidPlaceType(data.placeType) &&
+             data.title is string && data.title.size() >= 1 && data.title.size() <= 80 &&
+             data.subtitle is string && data.subtitle.size() <= 160 &&
+             data.latitude is number && data.latitude >= -90 && data.latitude <= 90 &&
+             data.longitude is number && data.longitude >= -180 && data.longitude <= 180 &&
+             data.cityName is string && data.cityName.size() >= 1 && data.cityName.size() <= 60 &&
+             (!('sourcePinId' in data) || (data.sourcePinId is string && data.sourcePinId.size() >= 1 && data.sourcePinId.size() <= 128)) &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    match /users/{userId}/saved_places/{placeId} {
+      allow get: if isSignedIn() && request.auth.uid == userId && isValidId(placeId);
+      allow list: if isSignedIn() && request.auth.uid == userId;
+
+      allow create: if isSignedIn() &&
+                       request.auth.uid == userId &&
+                       isValidId(placeId) &&
+                       incoming().keys().hasAll([
+                         'placeType', 'title', 'subtitle', 'latitude', 'longitude',
+                         'cityName', 'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'placeType', 'title', 'subtitle', 'latitude', 'longitude',
+                         'cityName', 'sourcePinId', 'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidSavedPlace(incoming());
+
+      allow update: if isSignedIn() &&
+                       request.auth.uid == userId &&
+                       isValidId(placeId) &&
+                       isValidSavedPlace(incoming()) &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'placeType', 'title', 'subtitle', 'latitude', 'longitude',
+                         'cityName', 'sourcePinId', 'updatedAt'
+                       ]);
+
+      allow delete: if isSignedIn() && request.auth.uid == userId && isValidId(placeId);
+    }
+  }
+}

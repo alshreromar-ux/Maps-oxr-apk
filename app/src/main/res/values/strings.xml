@@ -1,0 +1,197 @@
+<resources>
+    <string name="app_name">نبض المدينة</string>
+    <string name="app_subtitle">خريطة الخدمات والتحديثات الحية في مدينتك</string>
+    <string name="sign_in_title">مرحباً بك في نبض المدينة</string>
+    <string name="sign_in_subtitle">سجّل الدخول بحساب جوجل لاستكشاف الأماكن القريبة ومشاركة التحديثات الفورية مع مجتمع مدينتك.</string>
+    <string name="sign_in_with_google">تسجيل الدخول بحساب جوجل</string>
+    <string name="continue_as_guest">المتابعة كضيف (بدون حساب جوجل)</string>
+    <string name="guest_mode_note">يمكنك استكشاف العالم وإضافة النقاط كضيف فوراً، أو الدخول بجوجل للمزامنة السحابية</string>
+    <string name="guest_badge_label">وضع الضيف</string>
+    <string name="guest_upgrade_google">دخول بجوجل</string>
+    <string name="sign_out">تسجيل الخروج</string>
+
+    <!-- Categories -->
+    <string name="filter_all">الكل</string>
+    <string name="filter_nearest">الأقرب إليّ</string>
+    <string name="category_pharmacy">صيدلية مناوبة</string>
+    <string name="category_restaurant">مطعم</string>
+    <string name="category_maintenance">مركز صيانة</string>
+    <string name="category_cafe">مقهى</string>
+    <string name="category_deal">عرض لحظي</string>
+    <string name="category_road_report">بلاغ طريق</string>
+
+    <!-- Statuses -->
+    <string name="status_open">مفتوح الآن</string>
+    <string name="status_crowded">مزدحم</string>
+    <string name="status_deal_active">عرض متاح</string>
+    <string name="status_closed">مغلق حالياً</string>
+    <string name="status_traffic_alert">تنبيه مروري</string>
+
+    <!-- Map & Location -->
+    <string name="my_location_cd">الانتقال إلى موقعي الحالي</string>
+    <string name="my_location_chip">موقعي</string>
+    <string name="zoom_in_cd">تكبير الخريطة</string>
+    <string name="zoom_out_cd">تصغير الخريطة</string>
+    <string name="world_overview_cd">عرض العالم بأكمله</string>
+    <string name="map_style_cd">تغيير نمط ورسم الخريطة</string>
+    <string name="map_style_borders">حدود الدول</string>
+    <string name="map_style_atlas">أطلس واضح</string>
+    <string name="map_style_night">خريطة ليلية</string>
+    <string name="add_pin_label">أضف مكان أو بلاغ</string>
+    <string name="add_pin_cd">إضافة عنوان مطعم أو صيدلية أو بلاغ حادث أو ازدحام</string>
+    <string name="load_demo_pins">تحميل بيانات تجريبية</string>
+    <string name="location_permission_banner">فعّل إذن الموقع لعرض نقطتك المميزة وحساب المسافات بدقة</string>
+    <string name="grant_location_permission">تفعيل الموقع</string>
+
+    <!-- Bottom Sheet Details -->
+    <string name="update_status_action">تحديث الحالة</string>
+    <string name="confirm_status_action">تأكيد الوضع الحالي</string>
+    <string name="last_updated_prefix">آخر تحديث:</string>
+    <string name="confirmations_count_label">تأكيدات المجتمع:</string>
+    <string name="recent_updates_title">آخر التحديثات الحية</string>
+    <string name="no_recent_updates">لا توجد تحديثات إضافية بعد. كن أول من يحدّث الحالة!</string>
+    <string name="status_update_note_hint">ملاحظة قصيرة (اختياري)...</string>
+    <string name="save_status_update">حفظ التحديث</string>
+    <string name="delete_pin">حذف النقطة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="close_cd">إغلاق</string>
+
+    <!-- Add Pin Sheet -->
+    <string name="new_pin_title">أضف مكانك أو بلاغك</string>
+    <string name="pin_quick_type_label">ماذا تريد أن تضيف؟</string>
+    <string name="quick_type_restaurant">مطعمي</string>
+    <string name="quick_type_pharmacy">صيدليتي</string>
+    <string name="quick_type_accident">حادث مروري</string>
+    <string name="quick_type_traffic">ازدحام سير</string>
+    <string name="quick_type_maintenance">محطة / صيانة</string>
+    <string name="quick_type_cafe">مقهى</string>
+    <string name="quick_type_other">عرض / أخرى</string>
+    <string name="pin_title_label">الاسم أو العنوان المختصر</string>
+    <string name="pin_title_hint">مثال: مطعمي، صيدليتي، حادث أو ازدحام...</string>
+    <string name="pin_desc_label">تفاصيل العنوان أو الملاحظات</string>
+    <string name="pin_desc_hint">اكتب العنوان الدقيق، أوقات الدوام، أو وصف الحادث والازدحام...</string>
+    <string name="pin_category_label">التصنيف</string>
+    <string name="pin_status_label">الحالة الحالية</string>
+    <string name="pin_city_label">المدينة / الحي / الشارع</string>
+    <string name="pin_city_default">الرياض</string>
+    <string name="pin_photo_pick">إرفاق صورة (اختياري)</string>
+    <string name="pin_photo_change">تغيير الصورة</string>
+    <string name="pin_photo_remove">إزالة</string>
+    <string name="pin_photo_cd">صورة مرفقة للنقطة</string>
+    <string name="publish_pin">نشر على الخريطة</string>
+    <string name="using_current_coords">سيتم النشر عند إحداثياتك الحالية</string>
+    <string name="using_map_center_coords">سيتم النشر عند مركز الخريطة الحالي</string>
+    <string name="use_gps_coords_chip">موقعي (GPS)</string>
+    <string name="use_map_center_chip">مركز الخريطة</string>
+    <string name="hide_all_symbols">إخفاء الرموز</string>
+    <string name="show_all_symbols">إظهار الرموز</string>
+
+    <!-- Misc -->
+    <string name="retry">إعادة المحاولة</string>
+    <string name="pin_list_toggle_cd">عرض قائمة الأماكن القريبة</string>
+    <string name="map_view_toggle_cd">العودة إلى الخريطة</string>
+    <string name="empty_pins_title">لا توجد نقاط مطابقة للتصفية</string>
+    <string name="empty_pins_subtitle">جرّب اختيار فئة أخرى أو أضف نقطة جديدة في منطقتك.</string>
+    <string name="distance_meters_fmt">%1$d م</string>
+    <string name="distance_km_fmt">%1$.1f كم</string>
+
+    <!-- World Explorer & Regions -->
+    <string name="world_label">العالم بأكمله</string>
+    <string name="world_all_cities_badge">كل مدن العالم</string>
+    <string name="world_title">مستكشف مدن العالم</string>
+    <string name="world_subtitle">ابحث عن أي مدينة أو قرية أو معلم في العالم بأكمله</string>
+    <string name="world_search_hint">ابحث عن أي مدينة في العالم (طوكيو، بغداد، لندن...)</string>
+    <string name="world_quick_picks_title">وجهات سريعة حول العالم</string>
+    <string name="world_overview_action">العالم كله</string>
+    <string name="arab_world_overview_action">العالم العربي</string>
+    <string name="populate_world_action">نشر المدن</string>
+    <string name="world_picker_cd">اختيار أي مدينة أو دولة في العالم</string>
+    <string name="world_searching_global">جارٍ البحث المباشر في خرائط العالم...</string>
+    <string name="world_live_result_badge">بحث عالمي</string>
+    <string name="world_no_results">لم يتم العثور على مدينة بهذا الاسم. جرّب كتابة الاسم بالعربية أو الإنجليزية.</string>
+    <string name="world_region_all">الكل</string>
+    <string name="world_region_arab">العالم العربي</string>
+    <string name="world_region_europe">أوروبا</string>
+    <string name="world_region_asia">آسيا</string>
+    <string name="world_region_africa">أفريقيا</string>
+    <string name="world_region_north_america">أمريكا الشمالية</string>
+    <string name="world_region_south_america">أمريكا الجنوبية</string>
+    <string name="world_region_oceania">أوقيانوسيا</string>
+
+    <!-- Smart Global Search Upgrades -->
+    <string name="search_scope_all">الكل</string>
+    <string name="search_scope_places">أماكن وخدمات</string>
+    <string name="search_scope_cities">مدن ودول</string>
+    <string name="search_scope_hubs">مطارات وموانئ</string>
+    <string name="search_scope_community">نقاط الخريطة</string>
+    <string name="search_recent_title">عمليات البحث الأخيرة</string>
+    <string name="search_clear_recent">مسح</string>
+    <string name="search_quick_services_title">بحث سريع عن الخدمات والأماكن</string>
+    <string name="search_results_count_fmt">تم العثور على %1$d نتيجة فورية</string>
+    <string name="search_bar_placeholder">ابحث عن مدينة، شارع، مطعم، صيدلية، مطار...</string>
+    <string name="search_go_to_place">الانتقال إلى</string>
+
+    <!-- Turn-by-Turn Directions & Voice Guidance -->
+    <string name="start_directions_voice">ابدأ الاتجاهات بالصوت</string>
+    <string name="directions_short">اتجاهات</string>
+    <string name="calculating_route">جارٍ حساب أفضل مسار...</string>
+    <string name="stop_navigation">إنهاء</string>
+    <string name="prev_step">السابق</string>
+    <string name="next_step">التالي</string>
+    <string name="repeat_voice">إعادة النطق</string>
+    <string name="mute_voice">كتم الصوت</string>
+    <string name="unmute_voice">تفعيل الصوت</string>
+    <string name="step_counter_fmt">خطوة %1$d من %2$d</string>
+    <string name="route_direct_note">مسار مباشر (البوصلة)</string>
+    <string name="nav_to_prefix">إلى:</string>
+    <string name="mode_road">طريق بري</string>
+    <string name="mode_ship">سفينة بحرية</string>
+    <string name="mode_plane">مطار وطائرة</string>
+    <string name="route_sea_badge">عبر البحر بالسفينة</string>
+    <string name="route_air_badge">رحلة جوية عبر المطار</string>
+
+    <!-- AI Assistant (Firebase AI Logic) -->
+    <string name="ai_assistant_fab">ذكاء اصطناعي</string>
+    <string name="ai_assistant_title">المساعد الذكي</string>
+    <string name="ai_assistant_subtitle">تحليل مباشر للخريطة والطرق والخدمات القريبة</string>
+    <string name="ai_input_hint">اسألني عن الطريق، أقرب خدمة، أو أي مدينة...</string>
+    <string name="ai_send_cd">إرسال السؤال للذكاء الاصطناعي</string>
+    <string name="ai_speak_reply">استمع بالصوت</string>
+    <string name="ai_stop_speaking">إيقاف الصوت</string>
+    <string name="ai_ask_route_chip">اسأل الذكاء عن المسار</string>
+    <string name="ai_quick_traffic">لخّص الازدحام والطرق حولي</string>
+    <string name="ai_quick_nearby">اقترح أقرب مطعم أو صيدلية</string>
+    <string name="ai_quick_route">قيّم مساري الحالي ونصائح القيادة</string>
+    <string name="ai_quick_city">نبذة سريعة عن المدينة الحالية</string>
+    <string name="ai_welcome_message">أهلاً بك! أنا مساعد نبض المدينة الذكي. اسألني عن أقرب الصيدليات والمطاعم، حالة الازدحام والحوادث، أو اطلب نصائح لمسارك الحالي وسأقرأها لك بالصوت.</string>
+
+    <!-- Home, Work & Favorite Places -->
+    <string name="home_work_fab_label">بيتي وعملي</string>
+    <string name="home_work_fab_cd">إضافة أو الانتقال إلى مكان البيت والعمل والمفضلة</string>
+    <string name="saved_places_title">بيتي، عملي والمفضلة</string>
+    <string name="saved_places_subtitle">احفظ عنوان بيتك وعملك وأماكنك المفضلة للوصول السريع</string>
+    <string name="home_place_label">بيتي</string>
+    <string name="work_place_label">عملي</string>
+    <string name="favorite_place_label">مفضلة</string>
+    <string name="add_home_action">أضف مكان بيتك</string>
+    <string name="edit_home_action">تعديل مكان البيت</string>
+    <string name="add_work_action">أضف مكان عملك</string>
+    <string name="edit_work_action">تعديل مكان العمل</string>
+    <string name="set_as_home">تعيين كـ بيتي</string>
+    <string name="set_as_work">تعيين كـ عملي</string>
+    <string name="add_to_favorites">أضف للمفضلة</string>
+    <string name="remove_from_favorites">في المفضلة</string>
+    <string name="favorites_section_title">الأماكن المفضلة</string>
+    <string name="favorites_empty_hint">اضغط على أي مكان على الخريطة أو في البحث لتضغط نجمة وتضيفه هنا</string>
+    <string name="pick_home_on_map_banner">اضغط على موقع بيتك مباشرة على الخريطة</string>
+    <string name="pick_work_on_map_banner">اضغط على موقع عملك مباشرة على الخريطة</string>
+    <string name="pick_on_map_button">تحديد بالضغط على الخريطة</string>
+    <string name="save_current_gps_here">حفظ موقعي الحالي</string>
+    <string name="save_map_center_here">حفظ مركز الخريطة</string>
+    <string name="search_address_for_slot_hint">ابحث عن الحي أو الشارع أو المعلم...</string>
+    <string name="resolving_place_name">جارٍ تحديد اسم المكان...</string>
+    <string name="tapped_map_place_badge">موقع محدد</string>
+    <string name="add_pin_here_short">أضف كنقطة</string>
+    <string name="remove_saved_place_cd">حذف المكان المحفوظ</string>
+    <string name="favorite_toggle_cd">إضافة أو إزالة من المفضلة</string>
+</resources>

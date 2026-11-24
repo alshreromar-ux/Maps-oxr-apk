@@ -1,0 +1,220 @@
+{
+  "entities": {
+    "CityPin": {
+      "title": "CityPin",
+      "description": "A local point of interest, service, flash deal, or road report on the CityPulse map.",
+      "type": "object",
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "enum": ["public"],
+          "description": "Visibility scope of the community pin."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short display title of the place, offer, or report."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief contextual details about the place or report."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["PHARMACY", "RESTAURANT", "MAINTENANCE", "CAFE", "DEAL", "ROAD_REPORT"],
+          "description": "Pin category determining marker color and filter chip."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["OPEN", "CROWDED", "DEAL_ACTIVE", "CLOSED", "TRAFFIC_ALERT"],
+          "description": "Current live status reported by community users."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "WGS84 latitude coordinate."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "WGS84 longitude coordinate."
+        },
+        "cityName": {
+          "type": "string",
+          "description": "Locality or city name where the pin is located."
+        },
+        "photoBase64": {
+          "type": "string",
+          "description": "Optional compressed JPEG thumbnail encoded in Base64."
+        },
+        "confirmationsCount": {
+          "type": "integer",
+          "description": "Total community confirmations and live status updates."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Firebase Auth UID of the pin creator."
+        },
+        "createdByName": {
+          "type": "string",
+          "description": "Display name of the pin creator."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Firebase Auth UID of the latest status updater."
+        },
+        "updatedByName": {
+          "type": "string",
+          "description": "Display name of the latest status updater."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the pin was created (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the latest status update (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "visibility",
+        "title",
+        "description",
+        "category",
+        "status",
+        "latitude",
+        "longitude",
+        "cityName",
+        "confirmationsCount",
+        "createdBy",
+        "createdByName",
+        "updatedBy",
+        "updatedByName",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StatusUpdate": {
+      "title": "StatusUpdate",
+      "description": "An immutable live status update entry submitted by a community user for a pin.",
+      "type": "object",
+      "properties": {
+        "pinId": {
+          "type": "string",
+          "description": "Parent CityPin document ID."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public"],
+          "description": "Visibility scope matching the parent pin."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["OPEN", "CROWDED", "DEAL_ACTIVE", "CLOSED", "TRAFFIC_ALERT"],
+          "description": "Reported status at the time of update."
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional brief note from the user."
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user who reported this update."
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Display name of the user who reported this update."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the update (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "pinId",
+        "visibility",
+        "status",
+        "note",
+        "authorId",
+        "authorName",
+        "createdAt"
+      ]
+    },
+    "SavedPlace": {
+      "title": "SavedPlace",
+      "description": "A user's saved Home, Work, or Favorite map location.",
+      "type": "object",
+      "properties": {
+        "placeType": {
+          "type": "string",
+          "enum": ["HOME", "WORK", "FAVORITE"],
+          "description": "Saved place slot or favorite classification."
+        },
+        "title": {
+          "type": "string",
+          "description": "Display name of the saved place (e.g., بيتي, عملي, or place title)."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Address, neighborhood, or contextual note for the saved place."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "WGS84 latitude coordinate."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "WGS84 longitude coordinate."
+        },
+        "cityName": {
+          "type": "string",
+          "description": "City or locality name."
+        },
+        "sourcePinId": {
+          "type": "string",
+          "description": "Optional community pin ID if favorited from an existing pin."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when saved (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when last updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "placeType",
+        "title",
+        "subtitle",
+        "latitude",
+        "longitude",
+        "cityName",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/city_pins/{pinId}": {
+      "schema": {
+        "$ref": "#/entities/CityPin"
+      },
+      "description": "Community map pins visible across the city."
+    },
+    "/city_pins/{pinId}/status_updates/{updateId}": {
+      "schema": {
+        "$ref": "#/entities/StatusUpdate"
+      },
+      "description": "Live status update history entries for a specific city pin."
+    },
+    "/users/{userId}/saved_places/{placeId}": {
+      "schema": {
+        "$ref": "#/entities/SavedPlace"
+      },
+      "description": "Private per-user saved Home, Work, and Favorite locations."
+    }
+  }
+}
